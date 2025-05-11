@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CURAE Index - Proof of Concept v5</title>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Roboto:wght@400;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* --- Basic Reset & Body Styling --- */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #FDF5E6; /* Slightly warmer cream/parchment */
+            /* For actual texture: background-image: url('path/to/your/texture.jpg'); */
+            color: #1a1a1a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px 20px 60px 20px; /* More bottom padding */
+            box-sizing: border-box;
+        }
+
+        /* --- Main Container --- */
+        .container {
+            width: 100%;
+            max-width: 900px;
+            text-align: center;
+        }
+
+        /* --- CURAE Hero Title - Interactive Letters --- */
+        .curae-title-interactive {
+            font-family: 'Permanent Marker', cursive;
+            font-size: clamp(4rem, 18vw, 13rem);
+            font-weight: normal;
+            margin: 30px 0 0 0;
+            padding: 0;
+            line-height: 1;
+            color: #000000;
+            letter-spacing: clamp(5px, 2vw, 20px);
+            cursor: default;
+        }
+
+        .curae-title-interactive span {
+            cursor: pointer;
+            display: inline-block;
+            transition: transform 0.15s ease-in-out, color 0.2s;
+        }
+
+        .curae-title-interactive span:hover,
+        .curae-title-interactive span.active {
+            transform: scale(1.1) translateY(-5px);
+            color: #4A4A4A;
+        }
+        
+        .title-line {
+            width: 80%;
+            max-width: 700px;
+            height: 3px;
+            background-color: #000000;
+            margin: 15px auto 50px auto;
+            border: none;
+        }
+
+        /* --- Description Area --- */
+        .description-area {
+            margin-top: 20px;
+            margin-bottom: 40px; /* Added margin below */
+            padding: 25px;
+            min-height: 200px; 
+            border: 2px solid #000000;
+            background-color: rgba(255, 255, 255, 0.2);
+            text-align: left;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .description-area h3 {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.4rem, 3.5vw, 2rem);
+            margin-top: 0;
+            color: #000000;
+            margin-bottom: 15px;
+        }
+
+        .description-area p {
+            font-family: 'Merriweather', serif;
+            font-size: clamp(1rem, 2.2vw, 1.15rem);
+            line-height: 1.75;
+            color: #1a1a1a;
+        }
+        
+        /* --- CURAE Index Mission & Example (Bottom Sections) --- */
+        .bottom-section { /* Generic class for mission and example */
+            margin-top: 40px; /* Adjusted top margin */
+            padding: 25px;
+            border-top: 3px solid #000000;
+            text-align: left;
+            max-width: 750px;
+            width: 100%; /* Ensure it takes up the constrained width */
+            align-self: center; /* Keep it centered */
+        }
+
+        .bottom-section h2 {
+            font-family: 'Permanent Marker', cursive;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            letter-spacing: 2px;
+            color: #000000;
+            margin-bottom: 20px; /* Increased margin */
+            text-align: center;
+        }
+
+        .bottom-section p, .bottom-section ul {
+            font-family: 'Merriweather', serif;
+            font-size: clamp(1rem, 2.2vw, 1.1rem);
+            line-height: 1.7;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+
+        .bottom-section ul {
+            list-style: none; 
+            padding-left: 0;
+            margin-bottom: 25px; /* More space after the list */
+        }
+        .bottom-section ul li {
+            margin-bottom: 10px; 
+            padding-left: 25px; 
+            position: relative;
+        }
+        .bottom-section ul li::before {
+            content: "»"; 
+            position: absolute;
+            left: 0;
+            top: 2px; 
+            color: #000000;
+            font-weight: bold;
+            font-size: 1.2em; 
+        }
+
+        .platform-name-title { 
+            font-family: 'Roboto', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.3rem, 3.2vw, 1.8rem); 
+            color: #000000;
+            margin-top: 25px;
+            margin-bottom: 15px; 
+            display: block; 
+            text-align: center; 
+        }
+        
+        .score-emphasis { 
+            font-family: 'Roboto', serif; /* Changed for readability of score fraction */
+            font-weight: bold; /* Make the score part bold */
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem); 
+            color: #000000;
+        }
+        .score-value { 
+             font-family: 'Permanent Marker', cursive; /* Use marker for the number itself */
+             font-size: clamp(1.2rem, 2.7vw, 1.5rem); /* Slightly larger for emphasis */
+        }
+
+        .overall-curae-rating {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            border: 2px dashed #000000; /* Dashed border for emphasis */
+            background-color: rgba(0,0,0,0.03);
+        }
+        .overall-curae-rating p {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            color: #000000;
+        }
+        .overall-curae-rating .rating-value {
+            font-family: 'Permanent Marker', cursive;
+            font-size: clamp(2rem, 6vw, 3.5rem); /* Significantly larger for the overall score */
+            color: #000000;
+            display: block; /* Make it take its own line */
+            margin-top: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="curae-title-interactive">
+            <span data-letter="C">C</span><span data-letter="U">U</span><span data-letter="R">R</span><span data-letter="A">A</span><span data-letter="E">E</span>
+        </h1>
+        <hr class="title-line">
+
+        <section id="descriptionDisplay" class="description-area">
+            <!-- Initial content loaded by JavaScript -->
+        </section>
+    </div>
+
+    <section class="bottom-section curae-mission">
+        <h2>OUR GUIDING PRINCIPLE: CLARITY & CARE</h2>
+        <p>The world of AI tools and models is exploding, and it can feel overwhelming, especially if you're just starting out. Which platform is right for your project? How do you cut through the marketing buzz to find genuine quality and usability? The CURAE Index is designed with this challenge in mind. Our aesthetic – bold, clear, and direct, like this site – reflects our core mission: to evaluate with <span class="score-emphasis">care</span> and provide transparent, multi-faceted insights. We aim to empower everyone, from newcomers to seasoned pros, to make more informed decisions by understanding the true capabilities, limitations, and ethical considerations of AI systems. This index is our way of helping you navigate the landscape with greater confidence.</p>
+    </section>
+
+    <section class="bottom-section curae-example">
+        <h2>CURAE IN ACTION: AN EXAMPLE</h2>
+        <p>Let's see how CURAE helps break down a hypothetical image generation platform. We'll call it <strong class="platform-name-title">'Artisan AI Studio' (Proprietary)</strong>:</p>
+        
+        <ul>
+            <li><strong>C</strong> (Creativity & Control): <span class="score-emphasis"><span class="score-value">3.5</span>/5</span><br>Artisan AI can produce stunning, often surprising artistic styles, a real plus for unique visuals. However, users report that achieving very specific compositions or fine-tuning details (like exact character poses) often requires complex prompt engineering or multiple re-rolls, limiting precise creative command. While it excels at novelty, it sometimes sacrifices directability.</li>
+            <li><strong>U</strong> (Usability & UX): <span class="score-emphasis"><span class="score-value">2.5</span>/5</span><br>The platform boasts many features, but its interface is cluttered, with critical settings buried in sub-menus. Newcomers find the initial learning curve steep, though a dedicated community provides unofficial guides. This makes it powerful for experts but potentially frustrating for casual users or those needing quick turnarounds.</li>
+            <li><strong>R</strong> (Robustness & Reliability): <span class="score-emphasis"><span class="score-value">4.0</span>/5</span><br>For standard art styles and common subjects, Artisan AI is very reliable, generating consistent quality. Detrimentally, when pushed with highly experimental or ambiguous prompts, it occasionally produces distorted or nonsensical imagery. Positively, its core generation engine rarely crashes or times out, even under load.</li>
+            <li><strong>A</strong> (Accuracy & Alignment): <span class="score-emphasis"><span class="score-value">3.0</span>/5</span><br>The model is good at capturing the overall mood and primary subjects of a prompt. However, it often struggles with precise counts ("three apples" might yield two or four) or complex spatial relationships. While its artistic interpretation can be a plus, its literal prompt adherence for specific details can be a detrimental point of frustration.</li>
+            <li><strong>E</strong> (Ethics & Efficiency): <span class="score-emphasis"><span class="score-value">2.0</span>/5</span><br>Artisan AI (being proprietary) has safety filters, but users have found ways to generate borderline NSFW content or images perpetuating certain stereotypes, a clear detriment. On the positive side, generation times are relatively fast for the quality produced. However, the lack of transparency about its training data raises ethical questions for some users.</li>
+        </ul>
+
+        <div class="overall-curae-rating">
+            <p>Giving 'Artisan AI Studio' an</p>
+            <span class="rating-value" id="exampleAverageScore">3.0</span>
+            <p>Overall CURAE Index Rating</p>
+        </div>
+        <p style="margin-top: 20px;">This <span class="score-emphasis">Overall CURAE Index Rating</span> provides a quick snapshot, but the real value lies in understanding *why* it received that score by looking at the individual C, U, R, A, E dimensions. It highlights 'Artisan AI Studio' as a tool with high artistic potential but significant hurdles in user-friendliness, precise control, and ethical consistency, guiding users to see if its strengths align with their priorities despite its weaknesses.</p>
+    </section>
+
+    <script>
+        const curaeLetterExplanations = {
+            C: { title: "C: CREATIVITY & CONTROL", text: "Does it just regurgitate the expected, or is there a live wire of actual spark? Can you wrestle your vision out of it, bend it to your will, or are you just a passenger on its pre-programmed trip? We dissect whether it’s a true creative collaborator or just a sophisticated paint-by-numbers kit. This is where innovation meets intention." },
+            U: { title: "U: USABILITY & USER EXPERIENCE", text: "Forget a mountain of features if the damn thing's a soul-crushing ordeal to operate. Is the interface a confusing maze, a battlefield of clicks? Or does it flow, feeling like an extension of your own mind? This isn't about bells and whistles; it's about whether the tool gets out of your way or becomes the obstacle itself. This is where practical value is forged or broken." },
+            R: { title: "R: ROBUSTNESS & RELIABILITY", text: "What happens when you feed it the unexpected, the messy, the outright weird? Does it buckle, freeze, or cough up nonsense? Or does it stand its ground? And can you count on it to deliver solid, consistent output time after time, or is every generation a roll of the dice? We test its spine – its ability to take a hit and keep performing." },
+            A: { title: "A: ACCURACY & ALIGNMENT", text: "Does it *actually* listen? Does it nail the crucial details you specified, or does it just skim the surface and wander off on its own tangent? This is about raw fidelity to your intent. We scrutinize whether it translates your precise prompts into potent, faithful reality – no vague approximations, no 'close enoughs'." },
+            E: { title: "E: ETHICS & EFFICIENCY", text: "Can you inherently trust this tool not to spew out harmful, biased garbage or echo societal blind spots? Is responsibility baked into its core, or is it an afterthought? And practically speaking, is it swift enough to be a real asset, or does it chug along, burning through resources like there’s no tomorrow? This is the fundamental gut check – is it sound, and is it sane to use?" }
+        };
+
+        const initialSystemDescription = {
+            title: "THE CURAE INDEX: NAVIGATING AI WITH CARE",
+            text: "The CURAE Index isn't just another rating; it's a thoughtful approach to understanding the rapidly evolving landscape of generative AI. We believe in providing clear, multi-faceted insights that help everyone, especially newcomers, make informed choices. This site's direct and focused design reflects that commitment. Each letter in CURAE unpacks a vital dimension, moving beyond simple performance to assess how AI tools truly serve human creativity, usability, and ethical standards. Click a letter in the title above to explore its meaning."
+        };
+
+        const displayArea = document.getElementById('descriptionDisplay');
+        const interactiveLetters = document.querySelectorAll('.curae-title-interactive span');
+        let isLetterDescriptionActive = false; 
+
+        function loadInitialDescription() {
+            displayArea.innerHTML = `
+                <h3>${initialSystemDescription.title}</h3>
+                <p>${initialSystemDescription.text}</p>
+            `;
+            interactiveLetters.forEach(s => s.classList.remove('active'));
+            isLetterDescriptionActive = false;
+        }
+
+        interactiveLetters.forEach(span => {
+            span.addEventListener('click', (event) => {
+                event.stopPropagation(); 
+                const letter = span.getAttribute('data-letter');
+                const alreadyActiveAndThisLetter = span.classList.contains('active');
+                interactiveLetters.forEach(s => s.classList.remove('active'));
+                if (alreadyActiveAndThisLetter) {
+                    loadInitialDescription();
+                } else {
+                    span.classList.add('active');
+                    if (curaeLetterExplanations[letter]) {
+                        displayArea.innerHTML = `
+                            <h3>${curaeLetterExplanations[letter].title}</h3>
+                            <p>${curaeLetterExplanations[letter].text}</p>
+                        `;
+                        isLetterDescriptionActive = true;
+                    } else {
+                        loadInitialDescription(); 
+                    }
+                }
+            });
+        });
+        
+        document.addEventListener('click', function(event) {
+            const isInteractiveLetter = event.target.closest('.curae-title-interactive span');
+            if (isLetterDescriptionActive && !isInteractiveLetter) {
+                loadInitialDescription();
+            }
+        });
+
+        // Calculate and display example average score
+        function calculateExampleAverage() {
+            const scores = [3.5, 2.5, 4.0, 3.0, 2.0]; // Scores from the example
+            const sum = scores.reduce((acc, current) => acc + current, 0);
+            const average = (sum / scores.length).toFixed(1); // Calculate average and fix to 1 decimal place
+            document.getElementById('exampleAverageScore').textContent = average;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadInitialDescription();
+            calculateExampleAverage(); // Call the function to set the average
+        });
+
+    </script>
+
+</body>
+</html>
